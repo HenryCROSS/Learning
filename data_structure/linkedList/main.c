@@ -193,6 +193,7 @@ int nodeCounter(struct Node *head_ref)
 
 void swapNodes(struct Node **head_ref, int x, int y)
 {
+    //if the searching targets are the same
     if (x == y)
     {
         return;
@@ -202,18 +203,19 @@ void swapNodes(struct Node **head_ref, int x, int y)
     struct Node *pre_x = NULL, *current_x = *head_ref;
     while (current_x && current_x->data != x)
     {
-        pre_x = current_x;
-        current_x = current_x->next;
+        pre_x = current_x; //the one before the swapped one
+        current_x = current_x->next; //the one I want to swap
     }
 
     // Search for y
     struct Node *pre_y = NULL, *current_y = *head_ref;
     while (current_y && current_y->data != x)
     {
-        pre_y = current_y;
-        current_y = current_y->next;
+        pre_y = current_y; //the one before the swapped one
+        current_y = current_y->next; //the one I want to swap
     }
 
+    //if the target is not exist
     if (current_x == NULL || current_y == NULL)
     {
         return;
