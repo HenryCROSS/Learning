@@ -121,7 +121,7 @@ void append(struct Node **head_ref, int new_data)
     //2. put in the data
     new_node->data = new_data;
 
-    /* 3.This new node is going to be the last node, so make next  
+    /* 3.This new node is going to be the last node, so make next
     of it as NULL*/
     new_node->next = NULL;
 
@@ -240,7 +240,7 @@ void swapNodes(struct Node **head_ref, int x, int y)
     {
         *head_ref = current_x;
     }
-    
+
     //Swap next pointers
     struct Node* temp = current_y->next;
     current_y->next = current_x->next;
