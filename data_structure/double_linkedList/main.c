@@ -44,12 +44,16 @@ void insertAfter(struct Node* prev_node, int new_data)
     //put in the data
     new_node->data = new_data;
 
+    //make next of new node as next of prev_node
     new_node->next = prev_node->next;
 
+    //make the next of prev_node as new_node
     prev_node->next = new_node;
 
+    //make prev_node as previous of new_node
     new_node->prev = prev_node;
 
+    //change previous of new_node's next node
     if (new_node->next != NULL)
     {
         new_node->next->prev = new_node;
