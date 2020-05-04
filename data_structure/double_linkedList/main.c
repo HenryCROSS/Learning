@@ -8,10 +8,10 @@ int main(void)
     return 0;
 }
 
-void push (struct Node** head_ref, int new_data)
+void push(struct Node **head_ref, int new_data)
 {
     //allocate memory
-    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
 
     //put in the data
     new_node->data = new_data;
@@ -21,7 +21,7 @@ void push (struct Node** head_ref, int new_data)
     new_node->prev = NULL;
 
     //change prev of head node to new node
-    if((*head_ref) != NULL)
+    if ((*head_ref) != NULL)
     {
         (*head_ref)->prev = new_node;
     }
@@ -30,7 +30,7 @@ void push (struct Node** head_ref, int new_data)
     *head_ref = new_node;
 }
 
-void insertAfter(struct Node* prev_node, int new_data)
+void insertAfter(struct Node *prev_node, int new_data)
 {
     //check if the given value is NULL
     if (prev_node == NULL)
@@ -39,7 +39,7 @@ void insertAfter(struct Node* prev_node, int new_data)
         return;
     }
 
-    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
 
     //put in the data
     new_node->data = new_data;
@@ -58,4 +58,43 @@ void insertAfter(struct Node* prev_node, int new_data)
     {
         new_node->next->prev = new_node;
     }
+}
+
+void append(struct Node **head_ref, int new_data)
+{
+    struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+
+    struct Node *last = *head_ref;
+
+    new_node->data = new_data;
+
+    new_node->next = NULL;
+
+    /*if the linked list is empty, then make the new
+      node as head */
+    if (*head_ref == NULL)
+    {
+        new_node->prev = NULL;
+        *head_ref = new_node;
+        return;
+    }
+
+    // Else traverse till the last node
+    while (last->next != NULL)
+    {
+        last = last->next;
+    }
+
+    //change the next of last node
+    last->next = new_node;
+
+    //make last node as previous of new node
+    new_node->prev = last;
+
+    return;
+}
+
+void insertBefore (struct Node** head_ref, struct Node* next_node, int new_data)
+{
+    
 }
