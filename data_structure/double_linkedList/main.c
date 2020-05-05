@@ -218,9 +218,7 @@ void deleteNode(struct Node **head_ref, int key)
         }
         else
         {
-            struct Node *changed = NULL;
-            changed = target_node->next;
-            *head_ref = changed;
+            *head_ref = NULL;
         }
         return;
     }
