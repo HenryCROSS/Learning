@@ -5,7 +5,88 @@
 
 int main(void)
 {
+    /* Start with the empty list */
+    struct Node *head = NULL;
+
+    // Insert 6.  So linked list becomes 6->NULL
+    append(&head, 6);
+
+    printf("Created DLL is: ");
+    printList(head);
+
+    // Insert 7 at the beginning. So linked list becomes 7->6->NULL
+    push(&head, 7);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    // Insert 1 at the beginning. So linked list becomes 1->7->6->NULL
+    push(&head, 1);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    // Insert 4 at the end. So linked list becomes 1->7->6->4->NULL
+    append(&head, 4);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    // Insert 8, after 7. So linked list becomes 1->7->8->6->4->NULL
+    insertAfter(head->next, 8);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    printf("\n\ndelete=>\n\n");
+
+    deleteNode(&head, 8);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    deleteNode(&head, 1);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    deleteNode(&head, 7);
+
+    printf("\nCreated DLL is: ");
+    printList(head);
+    
+    deleteNode(&head, 4);
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    deleteNode(&head, 6);
+    printf("\nCreated DLL is: ");
+    printList(head);
+
+    append(&head, 1);
+    printf("\nCreated DLL is: ");
+    printList(head);
+
     return 0;
+}
+
+void printList(struct Node *node)
+{
+    struct Node *last = NULL;
+    printf("\nTraversal in forward direction \n");
+    while (node != NULL)
+    {
+        printf(" %d ", node->data);
+        last = node;
+        node = node->next;
+    }
+
+    printf("\nTraversal in reverse direction \n");
+    while (last != NULL)
+    {
+        printf(" %d ", last->data);
+        last = last->prev;
+    }
 }
 
 void push(struct Node **head_ref, int new_data)
@@ -30,10 +111,10 @@ void push(struct Node **head_ref, int new_data)
     *head_ref = new_node;
 }
 
-void insertAfter(struct Node *prev_node, int new_data)
+void insertAfter(struct Node *target_node, int new_data)
 {
     //check if the given value is NULL
-    if (prev_node == NULL)
+    if (target_node == NULL)
     {
         printf("the given previous node cannot be NULL");
         return;
@@ -44,14 +125,14 @@ void insertAfter(struct Node *prev_node, int new_data)
     //put in the data
     new_node->data = new_data;
 
-    //make next of new node as next of prev_node
-    new_node->next = prev_node->next;
+    //make next of new node as next of target_node
+    new_node->next = target_node->next;
 
-    //make the next of prev_node as new_node
-    prev_node->next = new_node;
+    //make the next of target_node  as new_node
+    target_node->next = new_node;
 
-    //make prev_node as previous of new_node
-    new_node->prev = prev_node;
+    //make target_node  as previous of new_node
+    new_node->prev = target_node;
 
     //change previous of new_node's next node
     if (new_node->next != NULL)
@@ -94,7 +175,75 @@ void append(struct Node **head_ref, int new_data)
     return;
 }
 
-void insertBefore (struct Node** head_ref, struct Node* next_node, int new_data)
+void insertBefore(struct Node **head_ref, struct Node *next_node, int new_data)
 {
-    
+    if (next_node == NULL)
+    {
+        printf("the given next node cannot be NULL");
+        return;
+    }
+
+    struct Node *new_node = (struct Node *)malloc(sizeof(*new_node));
+
+    new_node->data = new_data;
+
+    //make the prev of next_node as new node
+    new_node->prev = next_node->prev;
+
+    //make prev of next_node as new node
+    next_node->prev = new_node;
+
+    //make next_node as next of new_node
+    new_node->next = next_node;
+
+    //change next of new_nodr's previous node
+    if (new_node->prev != NULL)
+        new_node->prev->next = new_node;
+    //if the prev of new_node is NULL, it will be the new head node
+    else
+        (*head_ref) = new_node;
+}
+
+void deleteNode(struct Node **head_ref, int key)
+{
+    struct Node *target_node = *head_ref;
+
+    if (target_node != NULL && target_node->data == key)
+    {
+        if (target_node->next != NULL)
+        {
+            *head_ref = target_node->next;
+            target_node->next->prev = NULL;
+            free(target_node);
+        }
+        else
+        {
+            struct Node *changed = NULL;
+            changed = target_node->next;
+            *head_ref = changed;
+        }
+        return;
+    }
+
+    while (target_node != NULL && target_node->data != key)
+    {
+        target_node = target_node->next;
+    }
+
+    if (target_node == NULL)
+    {
+        return;
+    }
+
+    if (target_node->next == NULL)
+    {
+        target_node->prev->next = NULL;
+        free(target_node);
+        return;
+    }
+
+    target_node->prev->next = target_node->next;
+    target_node->next->prev = target_node->prev;
+
+    free(target_node);
 }
