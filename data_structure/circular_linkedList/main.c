@@ -4,6 +4,38 @@
 
 int main(void)
 {
+    struct Node *head = NULL;
+
+    // push(&head, 12);
+    // push(&head, 56);
+    // push(&head, 2);
+    // push(&head, 11);
+
+    // printf("Contents of Circular Linked List\n ");
+    // printList(head);
+
+    // insertAfter(head->next->next, 21);
+
+    // printf("\nContents of Circular Linked List\n ");
+    // printList(head);
+
+    // append(&head, 20);
+    append(&head, 202);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
+
+    insertBefore(&head, head, 100);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
+
+    deleteNode(&head, 202);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
+
+    // deleteNode(&head, 100);
+    // printf("\nContents of Circular Linked List\n ");
+    // printList(head);
+
     return 0;
 }
 
@@ -21,10 +53,145 @@ void printList(struct Node *first)
     }
 }
 
-void push (struct Node **head_ref, int data)
+void push(struct Node **head_ref, int data)
 {
     struct Node *ptr1 = malloc(sizeof(*ptr1));
     struct Node *temp = *head_ref;
     ptr1->data = data;
     ptr1->next = *head_ref;
+
+    //if linked list is not NULL then set the next of last node
+    if (*head_ref != NULL)
+    {
+        while (temp->next != *head_ref)
+        {
+            temp = temp->next;
+        }
+        temp->next = ptr1; // the last node connect to the first node
+    }
+    else
+    {
+        ptr1->next = ptr1; //for the first node
+    }
+
+    *head_ref = ptr1;
+}
+
+void insertAfter(struct Node *prev_node, int new_data)
+{
+    if (prev_node == NULL)
+    {
+        printf("the given previous node cannot be NULL");
+        return;
+    }
+
+    struct Node *insertedNode = malloc(sizeof(*insertedNode));
+
+    insertedNode->data = new_data;
+
+    insertedNode->next = prev_node->next;
+
+    prev_node->next = insertedNode;
+}
+
+void append(struct Node **head_ref, int new_data)
+{
+    struct Node *new_node = malloc(sizeof(*new_node));
+    struct Node *last_node = *head_ref;
+
+    new_node->data = new_data;
+    new_node->next = *head_ref;
+
+    //if it is the first node, only 1 node
+    if (*head_ref == NULL)
+    {
+        new_node->next = new_node;
+        (*head_ref) = new_node;
+        return;
+    }
+
+    //search for the last node
+    while (last_node->next != *head_ref)
+    {
+        last_node = last_node->next;
+    }
+
+    //append the new node after the last node
+    last_node->next = new_node;
+    return;
+}
+
+void insertBefore(struct Node **head_ref, struct Node *next_node, int new_data)
+{
+    //if it is null
+    if (next_node == NULL)
+    {
+        printf("the given next node cannot be NULL");
+        return;
+    }
+
+    struct Node *new_node = malloc(sizeof(*new_node));
+    struct Node *node = *head_ref;
+
+    new_node->data = new_data;
+
+    //search for the node before the next_node
+    while (node->next != next_node)
+    {
+        node = node->next;
+    }
+
+    //add the node before it
+    node->next = new_node;
+    new_node->next = next_node;
+}
+
+void deleteNode(struct Node **head_ref, int key)
+{
+    if ((*head_ref) == NULL)
+    {
+        return;
+    }
+    
+    //only 1 node
+    if ((*head_ref)->next == (*head_ref) && (*head_ref)->data == key)
+    {
+        *head_ref = NULL;
+        (*head_ref)->next = (*head_ref);
+        return;
+    }
+
+    struct Node *deleteNode = *head_ref, *prev_node;
+
+    //if it is the first node
+    if (deleteNode->data == key)
+    {
+        prev_node = *head_ref;
+        while (prev_node->next != *head_ref)
+        {
+            prev_node = prev_node->next;
+        }
+        
+        (*head_ref) = deleteNode->next;
+        prev_node->next = (*head_ref);
+        free(deleteNode);
+        return;
+    }
+
+    //search for the target
+    while (deleteNode->next != (*head_ref) && deleteNode->data != key)
+    {
+        prev_node = deleteNode;
+        deleteNode = deleteNode->next;
+    }
+
+    //target not exist
+    if (deleteNode == (*head_ref) && deleteNode->data != key)
+    {
+        return;
+    }
+
+    //delete node
+    prev_node->next = deleteNode->next;
+    free(deleteNode);
 }

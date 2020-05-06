@@ -148,6 +148,7 @@ void deleteNode(struct Node **head_ref, int key)
     //Store head node, could avoid the head position be modified
     struct Node *temp = *head_ref, *prev;
 
+    //if it is the first node
     if (temp != NULL && temp->data == key)
     {
         *head_ref = temp->next; //changed head
