@@ -18,7 +18,7 @@ void merge(int arr[], int l, int m, int r)
 	int n2 = r - m;
 
 	/* creat temp arrays */
-	int L[n1], R[n2];
+	int L[n1], R[n2];//it works after C99
 
 	/* Merge the temp arrays back into arr[l..r] */
 	for (i = 0; i < n1; i++)
