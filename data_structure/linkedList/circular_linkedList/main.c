@@ -6,20 +6,20 @@ int main(void)
 {
     struct Node *head = NULL;
 
-    // push(&head, 12);
-    // push(&head, 56);
-    // push(&head, 2);
-    // push(&head, 11);
+    push(&head, 12);
+    push(&head, 56);
+    push(&head, 2);
+    push(&head, 11);
 
-    // printf("Contents of Circular Linked List\n ");
-    // printList(head);
+    printf("Contents of Circular Linked List\n ");
+    printList(head);
 
-    // insertAfter(head->next->next, 21);
+    insertAfter(head->next->next, 21);
 
-    // printf("\nContents of Circular Linked List\n ");
-    // printList(head);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
 
-    // append(&head, 20);
+    append(&head, 20);
     append(&head, 202);
     printf("\nContents of Circular Linked List\n ");
     printList(head);
@@ -35,6 +35,14 @@ int main(void)
     // deleteNode(&head, 100);
     // printf("\nContents of Circular Linked List\n ");
     // printList(head);
+
+    reverseList(&head);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
+
+    reverseList(&head);
+    printf("\nContents of Circular Linked List\n ");
+    printList(head);
 
     return 0;
 }
@@ -194,4 +202,36 @@ void deleteNode(struct Node **head_ref, int key)
     //delete node
     prev_node->next = deleteNode->next;
     free(deleteNode);
+}
+
+void reverseList(struct Node** head)
+{
+    if(*head == NULL)
+    {
+        printf("Cannot reverse empty list.\n");
+        return;
+    }
+    
+    //temporary helper variables
+    struct Node *prev, *cur, *last;
+
+    //head is going to be our last node after reversing list
+    last = *head;
+
+    prev = *head;
+    cur = (*head)->next;
+    *head = (*head)->next;
+
+    //Iterate till you reach the initial nodein circular list
+    while (*head != last)
+    {
+        *head = (*head)->next;//move forward
+        cur->next = prev;//change the linked direction
+
+        prev = cur;//change the location of the pointer to next node
+        cur = *head;//move forward
+    }
+    
+    cur->next = prev;
+    *head = prev; //make last node as head
 }
