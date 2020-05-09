@@ -2,6 +2,7 @@
     "files.associations": {
         "*.json": "jsonc",
         "cmath": "c",
-        "xlocnum": "c"
+        "xlocnum": "c",
+        "ostream": "cpp"
     }
 }
