@@ -75,8 +75,15 @@ void ht_del_hash_table(ht_hash_table *ht)
     for (int i = 0; i < ht->size; i++)
     {
         ht_item *item = ht->items[i];
-        if (item != NULL)
+        if (item == &HT_DELETED_ITEM)
         {
+            printf("\n\n{problem1!!}: %d\n\n",i);//the 27th
+            ht->items[i] = NULL;
+            ht_del_item(item);
+        }
+        else if (item != NULL)
+        {
+            printf("\n\n{problem2!!}: %d\n\n",i);//the 27th
             ht_del_item(item);
         }
     }
@@ -208,7 +215,6 @@ void ht_delete(ht_hash_table *ht, const char *key)
     int index = ht_get_hash(key, ht->size, 0);
     //get the specific location
     ht_item *item = ht->items[index];
-
     int i = 1;
     //if the item is exist
     while (item != NULL)
@@ -222,7 +228,8 @@ void ht_delete(ht_hash_table *ht, const char *key)
                 //free the item memory
                 ht_del_item(item);
                 //turn the specific location into deleted state
-                ht->items[index] = &HT_DELETED_ITEM;
+                ht->items[index] = &HT_DELETED_ITEM;//bug!
+                //ht->items[index] = NULL;
             }
         }
 
