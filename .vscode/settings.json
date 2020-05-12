@@ -3,6 +3,7 @@
         "*.json": "jsonc",
         "cmath": "c",
         "xlocnum": "c",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iostream": "cpp"
     }
 }
