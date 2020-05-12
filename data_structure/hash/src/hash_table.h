@@ -12,7 +12,7 @@ typedef struct
     int count;
     int base_size;
     //an singular array of ht_item
-    ht_item **items;
+    ht_item **items;//8 byte
 } ht_hash_table;
 
 /**
