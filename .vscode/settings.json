@@ -6,6 +6,8 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "array": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "fstream": "cpp",
+        "ios": "cpp"
     }
 }
