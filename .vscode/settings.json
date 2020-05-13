@@ -4,6 +4,8 @@
         "cmath": "c",
         "xlocnum": "c",
         "ostream": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "array": "cpp",
+        "istream": "cpp"
     }
 }
