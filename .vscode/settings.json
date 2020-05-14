@@ -8,6 +8,9 @@
         "array": "cpp",
         "istream": "cpp",
         "fstream": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp"
     }
 }
