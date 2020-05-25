@@ -11,7 +11,6 @@ int main()
         cout << ch; // echo character
         ++count;
         cin.get(ch); // attempt to read another char
-        
     }
     cout << endl
          << count << " characters read\n";

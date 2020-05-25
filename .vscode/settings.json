@@ -12,5 +12,6 @@
         "vector": "cpp",
         "xstring": "cpp",
         "xutility": "cpp"
-    }
+    },
+    "sqltools.connections": []
 }
